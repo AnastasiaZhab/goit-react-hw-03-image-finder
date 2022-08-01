@@ -3,16 +3,16 @@ import s from './SearchBar.module.css';
 const SearchBar = (onSubmit) => {
     return (
         <header className={s.SearchBar}>
-        <form class="form">
-            <button type="submit" class="button">
-            <span class="button-label">Search</span>
+        <form className={s.SearchForm}>
+            <button type="submit" className={s.Button}>
+            <span className={s.Label}>Search</span>
             </button>
 
             <input
-            class="input"
+            className={s.Input}
             type="text"
-            autocomplete="off"
-            autofocus
+            // autocomplete="off"
+            // autofocus
             placeholder="Search images and photos"
             />
         </form>
