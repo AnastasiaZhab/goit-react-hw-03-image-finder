@@ -1,11 +1,14 @@
 import s from './SearchBar.module.css';
+import { BiSearch } from 'react-icons/bi';
 
 const SearchBar = (onSubmit) => {
     return (
         <header className={s.SearchBar}>
         <form className={s.SearchForm}>
             <button type="submit" className={s.Button}>
-            <span className={s.Label}>Search</span>
+                    {/* <span className={s.Label}> */}
+                    <BiSearch size='2em'/>
+                        {/* </span> */}
             </button>
 
             <input
