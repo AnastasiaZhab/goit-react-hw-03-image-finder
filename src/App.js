@@ -2,7 +2,8 @@ import "./App.css";
 import { Component } from "react";
 import SearchBar from "./components/SearchBar";
 import ImageGallery from "./components/ImageGallery";
-// import { Circles } from "react-loader-spinner";
+import { Oval } from "react-loader-spinner";
+import Button from "./components/Button";
 
 class App extends Component {
   state = {
@@ -38,26 +39,30 @@ class App extends Component {
   };
 
   render() {
-    const { image } = this.state;
+    const { image, status } = this.state;
     console.log(image);
     console.log(image);
 
+    let loader = null;
+    if (status === "pending") {
+      loader = (
+        <Oval
+          height="80"
+          width="80"
+          radius="9"
+          color="green"
+          ariaLabel="three-dots-loading"
+          wrapperStyle
+          wrapperClass
+        />
+      );
+    }
+
     return (
-      <div>
-        <SearchBar onSubmit={this.handleFormSubmit} />;{/* <Circles /> */}
-        {image && (
-          //   <Circles
-          //     height="80"
-          //     width="80"
-          //     radius="9"
-          //     color="green"
-          //     ariaLabel="three-dots-loading"
-          //     wrapperStyle
-          //     wrapperClass
-          //   />
-          // ) : (
-          <ImageGallery image={image} />
-        )}
+      <div className="div">
+        <SearchBar onSubmit={this.handleFormSubmit} />;{loader}
+        {image && <ImageGallery image={image} />}
+        {image && <Button />}
       </div>
     );
   }
