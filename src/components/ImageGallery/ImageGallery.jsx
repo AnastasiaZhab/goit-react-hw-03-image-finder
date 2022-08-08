@@ -2,6 +2,7 @@ import s from './ImageGallery.module.css';
 import ImageGalleryItem from '../ImageGalleryItem';
 
 const ImageGallery = ({ image }) => {
+    
     const arrayImages = image.hits;
     console.log(arrayImages);
     return (
