@@ -1,9 +1,16 @@
 import s from './ImageGallery.module.css';
+import ImageGalleryItem from '../ImageGalleryItem';
 
-const ImageGallery = () => {
+const ImageGallery = ({ image }) => {
+    const arrayImages = image.hits;
+    console.log(arrayImages);
     return (
         <ul className={s.ImageGallery}>
-            {/* <!-- Набор <li> с изображениями --> */}
+            {arrayImages.map(item => (
+                <ImageGalleryItem key={item.id} src={item.webformatURL} alt={item.tags} />
+            )
+            )}
+
         </ul>
     )
 };

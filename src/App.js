@@ -5,22 +5,46 @@ import ImageGallery from "./components/ImageGallery";
 
 class App extends Component {
   state = {
-    id: "",
+    image: null,
+    imageName: null,
+    status: "idle",
+    error: null,
   };
 
-  componentDidMount() {
-    // fetch(
-    //   "https://pixabay.com/api/?q=cat&page=1&key=your_key&image_type=photo&orientation=horizontal&per_page=12"
-    // )
-    //   .then((res) => res.json())
-    //   .then(console.log);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.imageName !== this.state.imageName) {
+      this.setState({ status: "pending" });
+      fetch(
+        `https://pixabay.com/api/?q=${this.state.imageName}&page=1&key=24939535-87b6ece9ab011f11d00db958e&image_type=photo&orientation=horizontal&per_page=12`
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+
+          return Promise.reject(new Error("немає картинки на таку тему"));
+        })
+        .then((image) => {
+          this.setState({ image, status: "resolved" });
+          console.log(image);
+        })
+        .catch((error) => this.setState({ error }));
+    }
   }
 
+  handleFormSubmit = (imageName) => {
+    this.setState({ imageName });
+  };
+
   render() {
+    const { image } = this.state;
+    console.log(image);
+    console.log(image);
+
     return (
       <div>
-        <SearchBar />
-        <ImageGallery />
+        <SearchBar onSubmit={this.handleFormSubmit} />;
+        {image && <ImageGallery image={image} />}
       </div>
     );
   }
