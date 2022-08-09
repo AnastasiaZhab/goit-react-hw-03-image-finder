@@ -4,6 +4,7 @@ import SearchBar from "./components/SearchBar";
 import ImageGallery from "./components/ImageGallery";
 import { Oval } from "react-loader-spinner";
 import Button from "./components/Button";
+import Modal from "./components/Modal";
 
 class App extends Component {
   state = {
@@ -11,6 +12,7 @@ class App extends Component {
     imageName: null,
     status: "idle",
     error: null,
+    showModal: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -38,8 +40,12 @@ class App extends Component {
     this.setState({ imageName });
   };
 
+  openModal = () => {
+    this.setState({ showModal: true });
+  };
+
   render() {
-    const { image, status } = this.state;
+    const { image, status, showModal } = this.state;
     console.log(image);
     console.log(image);
 
@@ -61,8 +67,9 @@ class App extends Component {
     return (
       <div className="div">
         <SearchBar onSubmit={this.handleFormSubmit} />;{loader}
-        {image && <ImageGallery image={image} />}
+        {image && <ImageGallery onClick={this.openModal} image={image} />}
         {image && <Button />}
+        {showModal && <Modal />}
       </div>
     );
   }
