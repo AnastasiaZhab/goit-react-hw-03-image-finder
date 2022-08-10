@@ -9,7 +9,6 @@ class SearchBar extends Component {
     
     handleNameChange = (event) => {
         this.setState({ imageName: event.currentTarget.value.toLowerCase().trim() });
-        console.log(this.state.imageName)
     }
 
     handleSubmit = event => {

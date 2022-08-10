@@ -3,9 +3,8 @@ import ImageGalleryItem from '../ImageGalleryItem';
 
 const ImageGallery = ({ image }) => {
 
-    const arrayImages = image.hits;
-    console.log('масив картинок:', arrayImages);
-    console.log('src: ', arrayImages[0].webformatURL)
+    const arrayImages = image;
+
     return (
         <ul className={s.ImageGallery}>
             {arrayImages.map(item => (
