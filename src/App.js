@@ -44,7 +44,7 @@ class App extends Component {
   }
 
   handleFormSubmit = (imageName) => {
-    this.setState({ imageName });
+    this.setState({ imageName, image: [] });
   };
 
   handleLoadMore = (prevState) => {
