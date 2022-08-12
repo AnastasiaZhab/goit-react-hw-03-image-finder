@@ -1,8 +1,8 @@
 import s from './ImageGalleryItem.module.css';
 
-const ImageGalleryItem = ({ src, alt }) => {
+const ImageGalleryItem = ({ src, alt, onClick }) => {
 
-        return (<li className={s.ImageGalleryItem}>
+    return (<li onClick={onClick} className={s.ImageGalleryItem}>
             <img className={s.Image} src={src} alt={alt} />
         </li>
         )

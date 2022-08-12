@@ -51,11 +51,12 @@ class App extends Component {
     this.setState((prevState) => ({
       page: prevState.page + 1,
     }));
-    console.log(this.state.page);
   };
 
-  openModal = () => {
-    this.setState({ showModal: true });
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
   };
 
   render() {
@@ -78,10 +79,17 @@ class App extends Component {
 
     return (
       <div className="div">
-        <SearchBar onSubmit={this.handleFormSubmit} />;{loader}
-        {image && <ImageGallery onClick={this.openModal} image={image} />}
+        <SearchBar onSubmit={this.handleFormSubmit} />
+        {loader}
+        {image && <ImageGallery onClick={this.toggleModal} image={image} />}
         {image.length > 0 && <Button onClick={this.handleLoadMore} />}
-        {showModal && <Modal />}
+        {showModal && (
+          <Modal
+            onClose={this.toggleModal}
+            src={image.webformatUrl}
+            alt={image.tags}
+          />
+        )}
       </div>
     );
   }
