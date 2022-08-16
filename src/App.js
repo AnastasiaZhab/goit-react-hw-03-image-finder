@@ -14,6 +14,7 @@ class App extends Component {
     error: null,
     showModal: false,
     page: 1,
+    idImage: "",
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -59,8 +60,26 @@ class App extends Component {
     }));
   };
 
+  findID = (event) => {
+    this.toggleModal();
+    const { id } = event.target;
+    this.setState({ idImage: id });
+    // this.findImagebyID();
+    console.log(event.target);
+    console.log(this.state.idImage);
+  };
+
+  findImagebyID = () => {
+    const { image, idImage } = this.state;
+    if (idImage) {
+      return image.find((item) => item.id === idImage);
+    }
+  };
+
   render() {
     const { image, status, showModal } = this.state;
+    const findedImage = this.findImagebyID();
+    console.log(findedImage);
 
     let loader = null;
     if (status === "pending") {
@@ -81,14 +100,12 @@ class App extends Component {
       <div className="div">
         <SearchBar onSubmit={this.handleFormSubmit} />
         {loader}
-        {image && <ImageGallery onClick={this.toggleModal} image={image} />}
+        {image && <ImageGallery onClick={this.findID} image={image} />}
         {image.length > 0 && <Button onClick={this.handleLoadMore} />}
         {showModal && (
-          <Modal
-            onClose={this.toggleModal}
-            src={image.webformatUrl}
-            alt={image.tags}
-          />
+          <Modal onClose={this.toggleModal}>
+            <img src={findedImage.largeImgURL} alt="" />
+          </Modal>
         )}
       </div>
     );
