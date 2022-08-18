@@ -8,7 +8,7 @@ const ImageGallery = ({ image, onClick }) => {
     return (
         <ul className={s.ImageGallery}>
             {arrayImages.map(item => (
-                <ImageGalleryItem onClick={onClick} id={item.id} key={item.id} src={item.webformatURL} alt={item.alt} />
+                <ImageGalleryItem onClick={onClick} id={item.id} key={item.id} src={item.webformatURL} alt={item.alt} largeImageURL={item.largeImageURL} />
             )
             )}
 

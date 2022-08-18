@@ -60,26 +60,14 @@ class App extends Component {
     }));
   };
 
-  findID = (event) => {
+  findID = (largeImgURL) => {
     this.toggleModal();
-    const { id } = event.target;
-    this.setState({ idImage: id });
-    // this.findImagebyID();
-    console.log(event.target);
-    console.log(this.state.idImage);
-  };
 
-  findImagebyID = () => {
-    const { image, idImage } = this.state;
-    if (idImage) {
-      return image.find((item) => item.id === idImage);
-    }
+    this.setState({ idImage: largeImgURL });
   };
 
   render() {
-    const { image, status, showModal } = this.state;
-    const findedImage = this.findImagebyID();
-    console.log(findedImage);
+    const { image, status, showModal, idImage } = this.state;
 
     let loader = null;
     if (status === "pending") {
@@ -90,6 +78,8 @@ class App extends Component {
           radius="9"
           color="green"
           ariaLabel="three-dots-loading"
+          marginRight="auto"
+          marginLeft="auto"
           wrapperStyle
           wrapperClass
         />
@@ -104,7 +94,7 @@ class App extends Component {
         {image.length > 0 && <Button onClick={this.handleLoadMore} />}
         {showModal && (
           <Modal onClose={this.toggleModal}>
-            <img src={findedImage.largeImgURL} alt="" />
+            <img src={idImage} alt="" />
           </Modal>
         )}
       </div>
