@@ -1,6 +1,7 @@
 import s from './SearchBar.module.css';
 import { BiSearch } from 'react-icons/bi';
 import { Component } from 'react';
+import PropTypes from 'prop-types'
 
 class SearchBar extends Component {
     state = {
@@ -13,6 +14,10 @@ class SearchBar extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
+
+        if (this.state.imageName === '') {
+            return;
+        }
 
         this.props.onSubmit(this.state.imageName);
 
@@ -46,3 +51,7 @@ class SearchBar extends Component {
 }
 
 export default SearchBar;
+
+SearchBar.propTypes = {
+    imageName: PropTypes.string.isRequired,
+}

@@ -1,4 +1,6 @@
 import "./App.css";
+import PropTypes from "prop-types";
+import API from "./services/api";
 import { Component } from "react";
 import SearchBar from "./components/SearchBar";
 import ImageGallery from "./components/ImageGallery";
@@ -23,16 +25,7 @@ class App extends Component {
     if (prevState.imageName !== imageName || prevState.page !== page) {
       this.setState({ status: "pending" });
 
-      fetch(
-        `https://pixabay.com/api/?q=${this.state.imageName}&page=${this.state.page}&key=24939535-87b6ece9ab011f11d00db958e&image_type=photo&orientation=horizontal&per_page=12`
-      )
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-
-          return Promise.reject(new Error("немає картинки на таку тему"));
-        })
+      API.fetchImage({ imageName, page })
         .then((image) => {
           this.setState({ status: "resolved" });
           this.setState((prevState) => ({
@@ -103,3 +96,9 @@ class App extends Component {
 }
 
 export default App;
+
+App.propTypes = {
+  image: PropTypes.arrayOf(PropTypes.shape),
+  imageName: PropTypes.string,
+  page: PropTypes.number,
+};
