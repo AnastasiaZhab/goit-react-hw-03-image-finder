@@ -17,28 +17,31 @@ class App extends Component {
     showModal: false,
     page: 1,
     idImage: "",
+    isVisible: false,
+    per_page: 12,
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { imageName, page } = this.state;
+    const { imageName, page, per_page } = this.state;
 
     if (prevState.imageName !== imageName || prevState.page !== page) {
       this.setState({ status: "pending" });
 
-      API.fetchImage({ imageName, page })
+      API.fetchImage({ imageName, page, per_page })
         .then((image) => {
+          const limitPage = page < image.total / per_page;
           this.setState({ status: "resolved" });
           this.setState((prevState) => ({
             image: [...prevState.image, ...image.hits],
+            isVisible: limitPage,
           }));
-          console.log(image);
         })
         .catch((error) => this.setState({ error }));
     }
   }
 
   handleFormSubmit = (imageName) => {
-    this.setState({ imageName, image: [] });
+    this.setState({ imageName, image: [], isVisible: false });
   };
 
   handleLoadMore = (prevState) => {
@@ -60,7 +63,7 @@ class App extends Component {
   };
 
   render() {
-    const { image, status, showModal, idImage } = this.state;
+    const { image, status, showModal, idImage, isVisible } = this.state;
 
     let loader = null;
     if (status === "pending") {
@@ -84,7 +87,7 @@ class App extends Component {
         <SearchBar onSubmit={this.handleFormSubmit} />
         {loader}
         {image && <ImageGallery onClick={this.findID} image={image} />}
-        {image.length > 0 && <Button onClick={this.handleLoadMore} />}
+        {isVisible && <Button onClick={this.handleLoadMore} />}
         {showModal && (
           <Modal onClose={this.toggleModal}>
             <img src={idImage} alt="" />
