@@ -65,27 +65,22 @@ class App extends Component {
   render() {
     const { image, status, showModal, idImage, isVisible } = this.state;
 
-    let loader = null;
-    if (status === "pending") {
-      loader = (
-        <Oval
-          height="80"
-          width="80"
-          radius="9"
-          color="green"
-          ariaLabel="three-dots-loading"
-          marginRight="auto"
-          marginLeft="auto"
-          wrapperStyle
-          wrapperClass
-        />
-      );
-    }
-
     return (
       <div className="div">
         <SearchBar onSubmit={this.handleFormSubmit} />
-        {loader}
+        {status === "pending" && (
+          <Oval
+            height="80"
+            width="80"
+            radius="9"
+            color="green"
+            ariaLabel="three-dots-loading"
+            marginRight="auto"
+            marginLeft="auto"
+            wrapperStyle
+            wrapperClass
+          />
+        )}
         {image && <ImageGallery onClick={this.findID} image={image} />}
         {isVisible && <Button onClick={this.handleLoadMore} />}
         {showModal && (
